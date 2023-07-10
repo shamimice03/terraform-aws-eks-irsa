@@ -1,0 +1,5 @@
+cluster_name   = "eks-cluster"
+irsa_role_name = "AWSLoadBalancerControllerRole"
+serviceaccount = "aws-lb-controller-sa"
+iam_policy_arn = "arn:aws:iam::391178969547:policy/AWS-LoadBalancer-Controller-Policy"
+oidc_provider_arn = "arn:aws:iam::391178969547:oidc-provider/oidc.eks.ap-northeast-1.amazonaws.com/id/6F8F05C582084C6C5382099D74932645"

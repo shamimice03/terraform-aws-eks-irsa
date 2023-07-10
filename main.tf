@@ -1,36 +1,15 @@
-data "aws_eks_cluster" "this" {
-  name = var.cluster_name
-}
-
-data "tls_certificate" "this" {
-  url = data.aws_eks_cluster.this.identity[0].oidc[0].issuer
-}
-
-### Check the exists using data block - https://jhooq.com/terraform-check-if-resource-exist/
-### Existing IAM oidc provider
-### get url of provider endpoint (from eks details)
-### retrieve arn
-
-
-resource "aws_iam_openid_connect_provider" "this" {
-  client_id_list  = ["sts.amazonaws.com"]
-  thumbprint_list = [data.tls_certificate.this.certificates[0].sha1_fingerprint]
-  url             = data.aws_eks_cluster.this.identity[0].oidc[0].issuer
-}
-
 locals {
-  # change for existing provider
-  aws_iam_oidc_provider_arn = aws_iam_openid_connect_provider.this.arn
+  // sample arn: arn:aws:iam::354478659547:oidc-provider/oidc.eks.ap-northeast-1.amazonaws.com/id/6F8FBBBAS82084C6C5382099D74932645
+  aws_iam_oidc_provider_arn = var.oidc_provider_arn
+  // sample provider: oidc.eks.ap-northeast-1.amazonaws.com/id/6F8FBBBAS82084C6C5382099D74932645
+  oidc_provider             = element(split("oidc-provider/", "${var.oidc_provider_arn}"), 1)
+  
 }
 
-
-
-# Resource: Create IAM Role and associate the IAM Policy to it
 
 resource "aws_iam_role" "irsa_role" {
   name = var.irsa_role_name
 
-  # Terraform's "jsonencode" function converts a Terraform expression result to valid JSON syntax.
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -57,13 +36,9 @@ resource "aws_iam_role" "irsa_role" {
   }
 }
 
-# Associate IAM Role and Policy
+# Attach IAM Policy with IAM Role
 resource "aws_iam_role_policy_attachment" "irsa_iam_role_policy_attach" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess"
+  policy_arn = var.iam_policy_arn
   role       = aws_iam_role.irsa_role.name
 }
 
-output "irsa_iam_role_arn" {
-  description = "IRSA Demo IAM Role ARN"
-  value       = aws_iam_role.irsa_role.arn
-}

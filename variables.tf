@@ -1,23 +1,36 @@
 variable "cluster_name" {
   description = "Name of the EKS cluster"
   type        = string
-  default     = "eks-cluster"
+  default     = null
 }
+
+variable "oidc_provider_arn"{
+  description = "ARN of the EKS OIDC Provider"
+  type        = string
+  default     = null
+}
+
 
 variable "irsa_role_name" {
   description = "Name of the irsa role"
   type        = string
-  default     = "S3ReadAccessIRSA"
+  default     = null
 }
 
 variable "namespace" {
   description = "Existing namespace name"
   type        = string
-  default     = "dev-ns"
+  default     = "kube-system"
 }
 
 variable "serviceaccount" {
   description = "Existing service account name"
   type        = string
-  default     = "aws-access"
+  default     = null
+}
+
+variable "iam_policy_arn" {
+  description = "ARN of the IAM Policy to be attached"
+  type        = string
+  default     = null
 }
