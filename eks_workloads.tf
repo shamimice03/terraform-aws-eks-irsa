@@ -15,11 +15,11 @@ resource "kubernetes_service_account_v1" "this" {
   count = var.serviceaccount["create_new"] ? 1 : 0
   metadata {
     name      = var.serviceaccount["name"]
-    namespace = kubernetes_namespace_v1.this[0].metadata[0].name
+    namespace = var.namespace["name"]
   }
 }
 
-
+# Annotate Service Account with the IAM Role ARN
 resource "kubernetes_annotations" "annotate_service_account" {
   api_version = "v1"
   kind        = "ServiceAccount"
@@ -31,5 +31,8 @@ resource "kubernetes_annotations" "annotate_service_account" {
     "eks.amazonaws.com/role-arn" = aws_iam_role.irsa_role.arn
   }
   
-  depends_on = ["kubernetes_service_account_v1.this"]
+  depends_on = [
+    kubernetes_namespace_v1.this[0],
+    kubernetes_service_account_v1.this[0]
+  ]
 }
