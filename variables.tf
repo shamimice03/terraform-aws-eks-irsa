@@ -4,12 +4,11 @@ variable "cluster_name" {
   default     = null
 }
 
-variable "oidc_provider_arn"{
+variable "oidc_provider_arn" {
   description = "ARN of the EKS OIDC Provider"
   type        = string
   default     = null
 }
-
 
 variable "irsa_role_name" {
   description = "Name of the irsa role"
@@ -18,15 +17,21 @@ variable "irsa_role_name" {
 }
 
 variable "namespace" {
-  description = "Existing namespace name"
-  type        = string
-  default     = "kube-system"
+  description = "Enter Namespace"
+  type        = map(any)
+  default = {
+    create_new = true,
+    name       = "aws-lb-controller"
+  }
 }
 
 variable "serviceaccount" {
-  description = "Existing service account name"
-  type        = string
-  default     = null
+  description = "Enter service account name"
+  type        = map(any)
+  default = {
+    create_new = true,
+    name       = "aws-lb-controller"
+  }
 }
 
 variable "iam_policy_arn" {
