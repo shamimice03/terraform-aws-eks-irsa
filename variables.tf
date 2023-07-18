@@ -21,7 +21,7 @@ variable "namespace" {
   type        = map(any)
   default = {
     create_new = true,
-    name       = "aws-lb-controller"
+    name       = ""
   }
 }
 
@@ -30,7 +30,7 @@ variable "serviceaccount" {
   type        = map(any)
   default = {
     create_new = true,
-    name       = "aws-lb-controller"
+    name       = ""
   }
 }
 
