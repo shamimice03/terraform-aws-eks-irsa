@@ -20,8 +20,8 @@ variable "namespace" {
   description = "Enter Namespace"
   type        = map(any)
   default = {
-    create_new = true,
-    name       = ""
+    create_new = false,
+    name       = null
   }
 }
 
@@ -29,8 +29,8 @@ variable "serviceaccount" {
   description = "Enter service account name"
   type        = map(any)
   default = {
-    create_new = true,
-    name       = ""
+    create_new = false,
+    name       = null
   }
 }
 

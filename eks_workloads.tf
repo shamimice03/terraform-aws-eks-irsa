@@ -21,6 +21,7 @@ resource "kubernetes_service_account_v1" "this" {
 
 # Annotate Service Account with the IAM Role ARN
 resource "kubernetes_annotations" "annotate_service_account" {
+  count = (var.namespace["create_new"] && var.serviceaccount["create_new"]) ? 1 : 0
   api_version = "v1"
   kind        = "ServiceAccount"
   metadata {
