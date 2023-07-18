@@ -1,4 +1,4 @@
 output "irsa_iam_role_arn" {
   description = "IRSA Demo IAM Role ARN"
-  value       = aws_iam_role.irsa_role[0].arn
+  value       = aws_iam_role.irsa_role[*].arn
 }

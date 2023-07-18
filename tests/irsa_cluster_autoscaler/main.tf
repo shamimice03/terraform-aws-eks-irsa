@@ -20,9 +20,10 @@ provider "kubernetes" {
 
 module "irsa" {
   source = "github.com/shamimice03/terraform-aws-eks-irsa"
-
+  
+  create            = false
   cluster_name      = local.cluster_name
-  oidc_provider_arn = "oidc.eks.ap-northeast-1.amazonaws.com/id/8A39B854534A32312B90A147FC317ACD"
+  oidc_provider_arn = "arn:aws:iam::391178969547:oidc-provider/oidc.eks.ap-northeast-1.amazonaws.com/id/B7AF2E49EC3DD282BAFAFD95B24CA053"
   irsa_role_name    = "ClusterAutoscalerIRSA"
   iam_policy_arn    = aws_iam_policy.this.arn
 
