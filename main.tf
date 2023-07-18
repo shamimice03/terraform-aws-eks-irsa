@@ -10,6 +10,8 @@ locals {
 
 
 resource "aws_iam_role" "irsa_role" {
+  count = var.create ? 1 : 0
+
   name = var.irsa_role_name
 
   assume_role_policy = jsonencode({
@@ -40,8 +42,9 @@ resource "aws_iam_role" "irsa_role" {
 
 # Attach IAM Policy with IAM Role
 resource "aws_iam_role_policy_attachment" "irsa_iam_role_policy_attach" {
+  count      = var.create ? 1 : 0
   policy_arn = var.iam_policy_arn
-  role       = aws_iam_role.irsa_role.name
+  role       = aws_iam_role.irsa_role[0].name
 }
 
 ####################################################################################
@@ -50,7 +53,7 @@ resource "aws_iam_role_policy_attachment" "irsa_iam_role_policy_attach" {
 
 # Create Namespace
 resource "kubernetes_namespace_v1" "this" {
-  count = var.namespace["create_new"] ? 1 : 0
+  count = (var.namespace["create_new"] && var.create) ? 1 : 0
   metadata {
     name = var.namespace["name"]
 
@@ -62,7 +65,7 @@ resource "kubernetes_namespace_v1" "this" {
 
 # Create Service Account
 resource "kubernetes_service_account_v1" "this" {
-  count = var.serviceaccount["create_new"] ? 1 : 0
+  count = (var.serviceaccount["create_new"] && var.create) ? 1 : 0
   metadata {
     name      = var.serviceaccount["name"]
     namespace = var.namespace["name"]
@@ -71,7 +74,7 @@ resource "kubernetes_service_account_v1" "this" {
 
 # Annotate Service Account with the IAM Role ARN
 resource "kubernetes_annotations" "annotate_service_account" {
-  count       = (var.namespace["create_new"] && var.serviceaccount["create_new"]) ? 1 : 0
+  count       = var.create ? 1 : 0
   api_version = "v1"
   kind        = "ServiceAccount"
   metadata {
@@ -79,7 +82,7 @@ resource "kubernetes_annotations" "annotate_service_account" {
     namespace = var.namespace["name"]
   }
   annotations = {
-    "eks.amazonaws.com/role-arn" = aws_iam_role.irsa_role.arn
+    "eks.amazonaws.com/role-arn" = aws_iam_role.irsa_role[0].arn
   }
 
   depends_on = [

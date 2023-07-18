@@ -1,5 +1,5 @@
 locals {
-  cluser_name = "eks-cluster"
+  cluster_name = "eks-cluster"
 }
 
 # https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/eks_cluster_auth
@@ -19,9 +19,9 @@ provider "kubernetes" {
 }
 
 module "irsa" {
-  
-  source            = "github.com/shamimice03/terraform-aws-eks-irsa"
-  cluster_name      = local.cluser_name
+  source = "github.com/shamimice03/terraform-aws-eks-irsa"
+
+  cluster_name      = local.cluster_name
   oidc_provider_arn = "oidc.eks.ap-northeast-1.amazonaws.com/id/8A39B854534A32312B90A147FC317ACD"
   irsa_role_name    = "ClusterAutoscalerIRSA"
   iam_policy_arn    = aws_iam_policy.this.arn
@@ -36,3 +36,5 @@ module "irsa" {
   }
 
 }
+
+

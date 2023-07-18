@@ -1,3 +1,9 @@
+variable "create" {
+  description = "Enable or Disable IRSA"
+  type        = bool
+  default     = true
+}
+
 variable "cluster_name" {
   description = "Name of the EKS cluster"
   type        = string
