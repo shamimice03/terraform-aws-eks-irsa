@@ -1,4 +1,4 @@
-## IAM Role For service Account (IRSA) 
+## IAM Role for Service Account (IRSA) 
 
 ### Usage
 
