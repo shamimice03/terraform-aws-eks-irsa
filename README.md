@@ -2,7 +2,7 @@
 
 ### Usage
 
-```
+```hcl
   
 module "irsa" {
     source = "shamimice03/eks-irsa/aws"
