@@ -9,7 +9,7 @@ module "irsa" {
     
     create            = true
     cluster_name      = "eks-cluster"
-    oidc_provider_arn = "oidc.eks.ap-northeast-1.amazonaws.com/id/8A39B854534A32312B90A147FC317ACD"
+    oidc_provider_arn = "arn:aws:iam::396778319547:oidc-provider/oidc.eks.ap-northeast-1.amazonaws.com/id/B7AF2E49EC3KK282BAFAFD95B24CA053"
     irsa_role_name    = "AWSLoadBalancerControllerRole"
     iam_policy_arn    = "arn:aws:iam::391178969547:policy/AWS-LoadBalancer-Controller-Policy"
     
