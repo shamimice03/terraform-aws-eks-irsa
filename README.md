@@ -1,6 +1,11 @@
+## IAM Role For service Account (IRSA) 
+
+### Usage
+
 ```
+  
 module "irsa" {
-    source = github.com/shamimice03/terraform-aws-eks-irsa
+    source = "shamimice03/eks-irsa/aws"
     
     create            = true
     cluster_name      = "eks-cluster"
