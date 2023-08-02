@@ -1,6 +1,6 @@
-## IAM Role for Service Account (IRSA) 
+# IAM Role for Service Account (IRSA) 
 
-### Usage
+## Usage
 
 ```hcl
   
@@ -23,9 +23,23 @@ module "irsa" {
     }
 }
 ```
-### License
+
+## Variables:
+
+| Variable              | Type      | Description                                    | Default |
+|-----------------------|-----------|------------------------------------------------|---------|
+| create                | bool      | Enable or Disable IRSA                         | true    |
+| cluster_name          | string    | Name of the EKS cluster                        | null    |
+| oidc_provider_arn     | string    | ARN of the EKS OIDC Provider                   | null    |
+| irsa_role_name        | string    | Name of the irsa role                          | null    |
+| namespace             | map(any)  | Enter Namespace                                | { "create_new" = false, "name" = null } |
+| serviceaccount        | map(any)  | Enter service account name                     | { "create_new" = false, "name" = null } |
+| iam_policy_arn        | string    | ARN of the IAM Policy to be attached           | null    |
+
+## License
 
 [![GPLv3 License](https://img.shields.io/badge/License-GPL%20v3-yellow.svg)](https://opensource.org/licenses/)
+
 
 <!--# Test Cases:-->
 <!--- [ ] IAM OIDC Provider Connect-->
