@@ -24,7 +24,7 @@ module "irsa" {
 }
 ```
 
-## Variables:
+## Variables
 
 | Variable              | Type      | Description                                    | Default |
 |-----------------------|-----------|------------------------------------------------|---------|
