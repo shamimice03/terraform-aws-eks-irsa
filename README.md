@@ -32,8 +32,8 @@ module "irsa" {
 | cluster_name          | string    | Name of the EKS cluster                        | null    |
 | oidc_provider_arn     | string    | ARN of the EKS OIDC Provider                   | null    |
 | irsa_role_name        | string    | Name of the irsa role                          | null    |
-| namespace             | map(any)  | Enter Namespace                                | { "create_new" = false, "name" = null }  |
-| serviceaccount        | map(any)  | Enter service account name                     | { "create_new" = false, "name" = null }  |
+| namespace             | map(any)  | Enter Namespace                                |  { "create_new" = false, "name" = null }  |
+| serviceaccount        | map(any)  | Enter service account name                     |  { "create_new" = false, "name" = null }  |
 | iam_policy_arn        | string    | ARN of the IAM Policy to be attached           | null    |
 
 ## License
